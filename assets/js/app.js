@@ -4,6 +4,12 @@ let cliente = {
   pedido: [],
 };
 
+const categorias = {
+  1: 'Comida',
+  2: 'Bebida',
+  3: 'Postre',
+};
+
 const btnGuardarCliente = document.getElementById('guardar-cliente');
 btnGuardarCliente.addEventListener('click', guardarCliente);
 
@@ -24,11 +30,9 @@ function guardarCliente() {
   modalBootstrap.hide();
 
   mostrarSecciones();
-}
 
-function mostrarSecciones() {
-  const seccionesOcultas = document.querySelectorAll('.d-none');
-  seccionesOcultas.forEach(seccion => seccion.classList.remove('d-none'));
+  // Obtener platillos de la API JSON-Server
+  obtenerPlatillos();
 }
 
 function mostrarAlerta(mensaje) {
@@ -47,4 +51,45 @@ function mostrarAlerta(mensaje) {
       });
     }, 2500);
   }
+}
+
+function mostrarSecciones() {
+  const seccionesOcultas = document.querySelectorAll('.d-none');
+  seccionesOcultas.forEach(seccion => seccion.classList.remove('d-none'));
+}
+
+function obtenerPlatillos() {
+  const platillos = 'http://localhost:4000/platillos';
+  fetch(platillos)
+    .then(res => res.json())
+    .then(data => mostrarPlatillos(data))
+    .catch(error => console.error(error));
+}
+
+function mostrarPlatillos(platillos) {
+  const contenido = document.querySelector('#platillos .contenido');
+
+  platillos.forEach(platillo => {
+    const { id, nombre, precio, categoria } = platillo;
+    const row = document.createElement('div');
+    row.classList.add('row', 'py-3', 'border-top');
+
+    const nombrePlatillo = document.createElement('div');
+    nombrePlatillo.classList.add('col-md-4');
+    nombrePlatillo.textContent = nombre;
+
+    const precioPlatillo = document.createElement('div');
+    precioPlatillo.classList.add('col-md-3', 'fw-bold');
+    precioPlatillo.textContent = `$${precio}`;
+
+    const categoriaPlatillo = document.createElement('div');
+    categoriaPlatillo.classList.add('col-md-3');
+    categoriaPlatillo.textContent = categorias[categoria];
+
+    row.appendChild(nombrePlatillo);
+    row.appendChild(precioPlatillo);
+    row.appendChild(categoriaPlatillo);
+
+    contenido.appendChild(row);
+  });
 }
