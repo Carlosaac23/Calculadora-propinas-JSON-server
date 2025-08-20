@@ -59,8 +59,8 @@ function mostrarSecciones() {
 }
 
 function obtenerPlatillos() {
-  const platillos = 'http://localhost:4000/platillos';
-  fetch(platillos)
+  const URL_PLATILLOS = 'http://localhost:4000/platillos';
+  fetch(URL_PLATILLOS)
     .then(res => res.json())
     .then(data => mostrarPlatillos(data))
     .catch(error => console.error(error));
@@ -86,9 +86,21 @@ function mostrarPlatillos(platillos) {
     categoriaPlatillo.classList.add('col-md-3');
     categoriaPlatillo.textContent = categorias[categoria];
 
+    const inputCantidad = document.createElement('input');
+    inputCantidad.type = 'number';
+    inputCantidad.min = 0;
+    inputCantidad.value = 0;
+    inputCantidad.id = `producto-${id}`;
+    inputCantidad.classList.add('form-control');
+
+    const agregar = document.createElement('div');
+    agregar.classList.add('col-md-2');
+    agregar.appendChild(inputCantidad);
+
     row.appendChild(nombrePlatillo);
     row.appendChild(precioPlatillo);
     row.appendChild(categoriaPlatillo);
+    row.appendChild(agregar);
 
     contenido.appendChild(row);
   });
