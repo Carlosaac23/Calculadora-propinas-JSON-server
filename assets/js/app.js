@@ -24,7 +24,7 @@ function guardarCliente() {
   }
 
   cliente = { ...cliente, mesa, hora };
-  console.log(cliente);
+
   const modalFormulario = document.getElementById('formulario');
   const modalBootstrap = bootstrap.Modal.getInstance(modalFormulario);
   modalBootstrap.hide();
