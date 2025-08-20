@@ -3,6 +3,7 @@
   text-align: center;
   animation: slideIn 0.15s ease-out;
   margin: 0;
+  padding: 0;
 }
 
 .alert.hide {
