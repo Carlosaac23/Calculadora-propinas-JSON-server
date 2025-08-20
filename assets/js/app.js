@@ -16,6 +16,19 @@ function guardarCliente() {
   if (camposVacios) {
     return mostrarAlerta('¡Todos los campos son obligatorios!');
   }
+
+  cliente = { ...cliente, mesa, hora };
+  console.log(cliente);
+  const modalFormulario = document.getElementById('formulario');
+  const modalBootstrap = bootstrap.Modal.getInstance(modalFormulario);
+  modalBootstrap.hide();
+
+  mostrarSecciones();
+}
+
+function mostrarSecciones() {
+  const seccionesOcultas = document.querySelectorAll('.d-none');
+  seccionesOcultas.forEach(seccion => seccion.classList.remove('d-none'));
 }
 
 function mostrarAlerta(mensaje) {
