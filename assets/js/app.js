@@ -18,7 +18,7 @@ function guardarCliente() {
   const hora = document.getElementById('hora').value;
 
   // Revisar si hay campos vacios
-  const camposVacios = [mesa, hora].some(campo => campo === '');
+  const camposVacios = [mesa, hora].some(campo => campo.trim() === '');
   if (camposVacios) {
     return mostrarAlerta('¡Todos los campos son obligatorios!');
   }
