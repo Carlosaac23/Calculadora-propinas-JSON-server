@@ -134,4 +134,91 @@ function agregarPlatillo(producto) {
     const resultado = pedido.filter(articulo => articulo.id !== producto.id);
     cliente.pedido = [...resultado];
   }
+
+  limpiarHTML();
+  actualizarResumen();
+}
+
+function actualizarResumen() {
+  const contenido = document.querySelector('#resumen .contenido');
+
+  const resumen = document.createElement('div');
+  resumen.classList.add('col-md-6', 'card', 'py-5', 'px-3', 'shadow');
+
+  const mesa = document.createElement('p');
+  mesa.textContent = 'Mesa: ';
+  mesa.classList.add('fw-bold');
+
+  const mesaSpan = document.createElement('span');
+  mesaSpan.textContent = cliente.mesa;
+  mesaSpan.classList.add('fw-normal');
+
+  const hora = document.createElement('p');
+  hora.textContent = 'Hora: ';
+  hora.classList.add('fw-bold');
+
+  const horaSpan = document.createElement('span');
+  horaSpan.textContent = cliente.hora;
+  horaSpan.classList.add('fw-normal');
+
+  mesa.appendChild(mesaSpan);
+  hora.appendChild(horaSpan);
+
+  const heading = document.createElement('h3');
+  heading.textContent = 'Platillos Consumidos';
+  heading.classList.add('my-4', 'text-center');
+
+  const grupo = document.createElement('ul');
+  grupo.classList.add('list-group');
+
+  const { pedido } = cliente;
+  pedido.forEach(articulo => {
+    const { nombre, cantidad, precio, id } = articulo;
+
+    const lista = document.createElement('li');
+    lista.classList.add('list-group-item');
+
+    const nombreEl = document.createElement('h4');
+    nombreEl.classList.add('my-4');
+    nombreEl.textContent = nombre;
+
+    const cantidadEl = document.createElement('p');
+    cantidadEl.classList.add('fw-bold');
+    cantidadEl.textContent = 'Cantidad: ';
+
+    const cantidadValor = document.createElement('span');
+    cantidadValor.classList.add('fw-normal');
+    cantidadValor.textContent = cantidad;
+
+    const precioEl = document.createElement('p');
+    precioEl.classList.add('fw-bold');
+    precioEl.textContent = 'Precio: ';
+
+    const precioValor = document.createElement('span');
+    precioValor.classList.add('fw-normal');
+    precioValor.textContent = `$${precio}`;
+
+    cantidadEl.appendChild(cantidadValor);
+    precioEl.appendChild(precioValor);
+
+    lista.appendChild(nombreEl);
+    lista.appendChild(cantidadEl);
+    lista.appendChild(precioEl);
+
+    grupo.appendChild(lista);
+  });
+
+  resumen.appendChild(mesa);
+  resumen.appendChild(hora);
+  resumen.appendChild(heading);
+  resumen.appendChild(grupo);
+
+  contenido.appendChild(resumen);
+}
+
+function limpiarHTML() {
+  const contenido = document.querySelector('#resumen .contenido');
+  while (contenido.firstChild) {
+    contenido.removeChild(contenido.firstChild);
+  }
 }
