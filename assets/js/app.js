@@ -115,9 +115,24 @@ function agregarPlatillo(producto) {
   let { pedido } = cliente;
 
   if (producto.cantidad > 0) {
-    cliente.pedido = [...pedido, producto];
+    const articuloExiste = pedido.some(articulo => articulo.id === producto.id);
+
+    if (articuloExiste) {
+      const pedidoActualizado = pedido.map(articulo => {
+        if (articulo.id === producto.id) {
+          articulo.cantidad = producto.cantidad;
+        }
+
+        return articulo;
+      });
+
+      cliente.pedido = [...pedidoActualizado];
+    } else {
+      cliente.pedido = [...pedido, producto];
+    }
   } else {
-    console.log('No es mayor a 0');
+    const resultado = pedido.filter(articulo => articulo.id !== producto.id);
+    cliente.pedido = [...resultado];
   }
 
   console.log(cliente.pedido);
