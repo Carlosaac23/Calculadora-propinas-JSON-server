@@ -259,6 +259,10 @@ function eliminarProducto(id) {
   }
 
   mensajePedidoVacio();
+
+  const productoEliminado = `producto-${id}`;
+  const inputEliminado = document.getElementById(productoEliminado);
+  inputEliminado.value = 0;
 }
 
 function mensajePedidoVacio() {
