@@ -136,7 +136,12 @@ function agregarPlatillo(producto) {
   }
 
   limpiarHTML();
-  actualizarResumen();
+
+  if (cliente.pedido.length) {
+    return actualizarResumen();
+  }
+
+  mensajePedidoVacio();
 }
 
 function actualizarResumen() {
@@ -206,6 +211,14 @@ function actualizarResumen() {
     subtotalValor.classList.add('fw-normal');
     subtotalValor.textContent = `$${precio * cantidad}`;
 
+    const btnEliminar = document.createElement('button');
+    btnEliminar.classList.add('btn', 'btn-danger');
+    btnEliminar.textContent = 'Eliminar del Pedido';
+
+    btnEliminar.onclick = () => {
+      eliminarProducto(id);
+    };
+
     cantidadEl.appendChild(cantidadValor);
     precioEl.appendChild(precioValor);
     subtotalEl.appendChild(subtotalValor);
@@ -214,6 +227,7 @@ function actualizarResumen() {
     lista.appendChild(cantidadEl);
     lista.appendChild(precioEl);
     lista.appendChild(subtotalEl);
+    lista.appendChild(btnEliminar);
 
     grupo.appendChild(lista);
   });
@@ -231,4 +245,27 @@ function limpiarHTML() {
   while (contenido.firstChild) {
     contenido.removeChild(contenido.firstChild);
   }
+}
+
+function eliminarProducto(id) {
+  const { pedido } = cliente;
+  const resultado = pedido.filter(articulo => articulo.id !== id);
+  cliente.pedido = [...resultado];
+
+  limpiarHTML();
+
+  if (cliente.pedido.length) {
+    return actualizarResumen();
+  }
+
+  mensajePedidoVacio();
+}
+
+function mensajePedidoVacio() {
+  const contenido = document.querySelector('#resumen .contenido');
+  const texto = document.createElement('p');
+  texto.classList.add('text-center');
+  texto.textContent = 'Añade los elementos del pedido';
+
+  contenido.appendChild(texto);
 }
