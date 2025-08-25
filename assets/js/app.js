@@ -134,6 +134,4 @@ function agregarPlatillo(producto) {
     const resultado = pedido.filter(articulo => articulo.id !== producto.id);
     cliente.pedido = [...resultado];
   }
-
-  console.log(cliente.pedido);
 }
