@@ -198,12 +198,22 @@ function actualizarResumen() {
     precioValor.classList.add('fw-normal');
     precioValor.textContent = `$${precio}`;
 
+    const subtotalEl = document.createElement('p');
+    subtotalEl.classList.add('fw-bold');
+    subtotalEl.textContent = 'Subtotal: ';
+
+    const subtotalValor = document.createElement('span');
+    subtotalValor.classList.add('fw-normal');
+    subtotalValor.textContent = `$${precio * cantidad}`;
+
     cantidadEl.appendChild(cantidadValor);
     precioEl.appendChild(precioValor);
+    subtotalEl.appendChild(subtotalValor);
 
     lista.appendChild(nombreEl);
     lista.appendChild(cantidadEl);
     lista.appendChild(precioEl);
+    lista.appendChild(subtotalEl);
 
     grupo.appendChild(lista);
   });
