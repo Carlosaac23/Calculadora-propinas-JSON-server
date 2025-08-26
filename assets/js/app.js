@@ -360,14 +360,8 @@ function calcularPropina() {
   });
 
   const propinaSeleccionada = document.querySelector('[name="propina"]:checked').value;
-
   const propina = (subtotal * parseInt(propinaSeleccionada)) / 100;
-
   const total = subtotal + propina;
-
-  console.log(propina);
-  console.log(subtotal);
-  console.log(total);
 
   mostrarTotalHTML(subtotal, propina, total);
 }
